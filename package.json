@@ -1,0 +1,15 @@
+{
+    "name": "pfizer-format",
+    "version": "1.0.0",
+    "description": "Converts specific JSON file to format required by Pfizer",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "Liron Toledo",
+    "license": "ISC",
+    "bin": {
+        "pfizer-format": "./cli.js"
+    }
+}
