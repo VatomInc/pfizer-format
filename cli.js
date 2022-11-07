@@ -8,17 +8,26 @@ let save = args[1]
 
 let pfizerFormat = []
 
+let currentDate = new Date()
+let day = currentDate.getDay() >= 10 ? currentDate.getDay() : `0${currentDate.getDay()}` 
+let today = `${currentDate.getFullYear()}${currentDate.getMonth()}${day}`
+let headerTrailer = `VAT|${objects.length}|${today}|120000|`
+pfizerFormat.push(headerTrailer)
+
+let date = ''
+
 // Formate Data
 for(let obj of objects){
 
     let dateTime = obj.created_at.split('T')
-    let date = dateTime[0].replaceAll('-','')
+    date = dateTime[0].replaceAll('-','')
+    let yearMonthDay = dateTime[0].split('-') 
     let time = dateTime[1].replaceAll(':', '').replaceAll('.', '').slice(0, -1)
-    let transactionID = date+time
+    let transactionID = '221000'+yearMonthDay[1]+yearMonthDay[2]+yearMonthDay[0]+time+Math.floor(Math.random() * 10);
 
     let answers = []
 
-    if(obj.id) {
+    if(obj.id){
         let data = {question: 'Q10003', answer: 'A10003', value: obj.id}
         answers.push(data)
     }
@@ -76,6 +85,8 @@ for(let obj of objects){
    
 }
 
+pfizerFormat.push(headerTrailer)
+
 // Create string from data
 let pfizerString = ''
 for(let pfizer of pfizerFormat){
@@ -87,6 +98,7 @@ console.log(pfizerString)
 
 // Save to text file
 if(save == 's'){
+    let fileName = `PFIZ_VAT_CHNLIN_${date}`
     const fs = require('fs');
-    fs.writeFileSync("pfizer.txt", pfizerString);
+    fs.writeFileSync(fileName, pfizerString);
 }
