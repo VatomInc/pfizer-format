@@ -61,7 +61,7 @@ if(fileType == 'json') {
     let save = args[1]
 
     // Filter out entries with no data (determined by checking for name)
-    objects = objects.filter(o => !o.name)
+    objects = objects.filter(o => o.name)
 
     // Format data
     pfizerFormat(objects, save)
