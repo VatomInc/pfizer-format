@@ -1,7 +1,8 @@
 ## Instructions:
 1. Clone repo
 2. Open terminal inside this folder (Can also use terminal from VS Code)
-3. npm link
-3. Type into terminal: pfizer-format ./data.json
-4. The resulting formatted text will be logged to console
-5. If you want to save the formatted text to a text file, type: pfizer-format ./data.json s
+3. npm install
+4. npm link
+5. Type into terminal: pfizer-format {file-name} [e.g ./data.csv]
+6. The resulting formatted text will be logged to console
+7. If you want to save the formatted text to a text file, add 's' after the file name [e.g pfizer-format {file-name} s]

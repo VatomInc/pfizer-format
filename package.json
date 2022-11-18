@@ -10,6 +10,10 @@
     "author": "Liron Toledo",
     "license": "ISC",
     "bin": {
-        "pfizer-format": "./cli.js"
+        "pfizer-format": "cli.js"
+    },
+    "dependencies": {
+        "csv": "^6.2.2",
+        "parser": "^0.1.4"
     }
 }
