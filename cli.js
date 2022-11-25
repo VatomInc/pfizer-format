@@ -121,13 +121,20 @@ function pfizerFormat(objects, save) {
         }
     
         if(obj.jingleball_content_1) {
-            let data = {question: 'Q50111', answer: 'A50241', value: obj.jingleball_content_1}
-            answers.push(data)
+            let content = obj.jingleball_content_1.split(',')
+            for(let c of content){
+                let data = {question: 'Q50111', answer: 'A50241', value: c}
+                answers.push(data)
+            }
         }
+            
     
         if(obj.jingleball_content_2) {
-            let data = {question: 'Q50112', answer: 'A50246', value: obj.jingleball_content_2}
-            answers.push(data)
+            let content = obj.jingleball_content_2.split(',')
+            for(let c of content){
+                let data = {question: 'Q50112', answer: 'A50246', value: c}
+                answers.push(data)
+            }
         }
     
         if(answers.length > 0) {
