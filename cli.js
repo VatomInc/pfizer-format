@@ -25,13 +25,13 @@ if(fileType == 'csv') {
             id: row[0] ,
             score: row[1],
             created_at: row[2],
-            name: row[3],
-            phone: row[4],
-            jingleball_age: row[5],
-            jingleball_zip: row[6],
-            jingleball_content_1: removeAllChars(row[7], charsToRemove),
-            jingleball_content_2: removeAllChars(row[8], charsToRemove),
-            email: row[9]
+            email: row[3],
+            name: row[4],
+            phone: row[5],
+            jingleball_age: row[6],
+            jingleball_zip: row[7],
+            jingleball_content_1: removeAllChars(row[8], charsToRemove),
+            jingleball_content_2: removeAllChars(row[9], charsToRemove),
         }
 
         // Skip entries with no data (determined by checking for name)
