@@ -183,7 +183,7 @@ function pfizerFormat(objects, save) {
     
     // Save to text file
     if(save == 's'){
-        let fileName = `PFIZ_VAT_CHNLIN_${today}`
+        let fileName = `PFIZ_VAT_CHNLIN_${today}.txt`
         const fs = require('fs');
         fs.writeFileSync(fileName, pfizerString);
     }
