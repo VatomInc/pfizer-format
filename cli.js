@@ -90,10 +90,10 @@ function pfizerFormat(objects, save) {
     
         let answers = []
     
-        if(obj.id){
-            let data = {question: 'Q10003', answer: 'A10003', value: obj.id}
-            answers.push(data)
-        }
+        // if(obj.id){
+        //     let data = {question: 'Q10003', answer: 'A10003', value: obj.id}
+        //     answers.push(data)
+        // }
         
     
         if(obj.name){
@@ -157,7 +157,7 @@ function pfizerFormat(objects, save) {
                 let pfizer = ''
                 pfizer += 'VAT|'
                 pfizer += `${date}|`
-                pfizer += 'COMI11004201|'
+                pfizer += 'COMI11004325|'
                 pfizer += `${transactionID}|`
                 pfizer += 'S50009|'
                 pfizer += `${answer.question}|`
