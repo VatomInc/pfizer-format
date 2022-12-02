@@ -94,6 +94,7 @@ function pfizerFormat(objects, save) {
             let data = {question: 'Q10003', answer: 'A10003', value: obj.id}
             answers.push(data)
         }
+        
     
         if(obj.name){
             let name = obj.name.split(" ")
@@ -105,6 +106,11 @@ function pfizerFormat(objects, save) {
             answers.push(data)
         }
     
+        if(obj.email){
+            let data = {question: 'Q10015', answer: 'A10015', value: obj.email}
+            answers.push(data)
+        }
+
         if(obj.phone){
             let data = {question: 'Q14556', answer: 'A22765', value: obj.phone}
             answers.push(data)
@@ -123,6 +129,10 @@ function pfizerFormat(objects, save) {
         if(obj.jingleball_content_1) {
             let content = obj.jingleball_content_1.split(',')
             for(let c of content){
+                if (c === 'undisclosed') {
+                    answers.push({question: 'Q50115', answer: 'A50253', value: 'Yes'})
+                    break
+                }
                 let data = {question: 'Q50111', answer: 'A50241', value: c}
                 answers.push(data)
             }
@@ -132,10 +142,15 @@ function pfizerFormat(objects, save) {
         if(obj.jingleball_content_2) {
             let content = obj.jingleball_content_2.split(',')
             for(let c of content){
-                let data = {question: 'Q50112', answer: 'A50246', value: c}
+                if (c === 'undisclosed') {
+                    answers.push({question: 'Q50116', answer: 'A50254', value: 'Yes'})
+                    break
+                }let data = {question: 'Q50112', answer: 'A50246', value: c}
                 answers.push(data)
             }
         }
+
+        answers.push({question: 'Q50061', answer: 'A50132', value: 'NI'})
     
         if(answers.length > 0) {
             for(let answer of answers) {
