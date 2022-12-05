@@ -15,12 +15,13 @@ if(fileType != 'csv' && fileType != 'json') {
 if(fileType == 'csv') {
 
     let objects = []
-    let charsToRemove = ['[', ']', '"']
+    const charsToRemove = ['[', ']', '"']
 
     // Parse csv file
     fs.createReadStream(args[0])
     .pipe(parse({ delimiter: ",", from_line: 2 }))
     .on("data", function (row) {
+        
         let obj = {
             id: row[0] ,
             score: row[1],
@@ -79,7 +80,7 @@ function pfizerFormat(objects, save) {
     let headerTrailer = `VAT|${objects.length}|${today}|120000|`
     pfizerFormat.push(headerTrailer)
     
-    // Formate Data
+    // Format Data
     for(let obj of objects) {
     
         let dateTime = obj.created_at.split('T')
@@ -133,7 +134,7 @@ function pfizerFormat(objects, save) {
                     answers.push({question: 'Q50115', answer: 'A50253', value: 'Yes'})
                     break
                 }
-                let data = {question: 'Q50111', answer: 'A50241', value: c}
+                let data = {question: 'Q50111', answer: getAnswerCode(c), value: c}
                 answers.push(data)
             }
         }
@@ -146,7 +147,8 @@ function pfizerFormat(objects, save) {
                     answers.push({question: 'Q50116', answer: 'A50254', value: 'Yes'})
                     break
                 }
-                let data = {question: 'Q50112', answer: 'A50246', value: c}
+                
+                let data = {question: 'Q50112', answer: getAnswerCode(c), value: c}
                 answers.push(data)
             }
         }
@@ -197,4 +199,42 @@ function removeAllChars(string, chars){
         string = string.replaceAll(char, '')
     }
     return string
+}
+
+/** Get hardcoded answer code based on survey answer */
+function getAnswerCode(answer, def){
+    
+    answer = answer.toLowerCase()
+
+    if(answer == '65+'){
+        return 'A50240'
+    }
+
+    if(answer == '18-64'){
+        return 'A50241'
+    }
+
+    if(answer == '12-17'){
+        return 'A50242'
+    }
+
+    if(answer == '5-11'){
+        return 'A50243'
+    }
+
+    if(answer == '6m-4'){
+        return 'A50244'
+    }
+
+    if(answer == 'immunocompromised'){
+        return 'A50245'
+    }
+
+    if(answer == 'primary'){
+        return 'A50246'
+    }
+
+    if(answer == 'booster'){
+        return 'A50247'
+    }
 }
