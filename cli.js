@@ -74,28 +74,35 @@ function pfizerFormat(objects, save) {
 
     let pfizerFormat = []
 
+    // Get current date and time in correct format
     let currentDate = new Date()
-    let day = currentDate.getDay() >= 10 ? currentDate.getDay() : `0${currentDate.getDay()}` 
-    let today = `${currentDate.getFullYear()}${currentDate.getMonth()}${day}`
-    let headerTrailer = `VAT|${objects.length}|${today}|120000|`
-    pfizerFormat.push(headerTrailer)
     
-    // Format Data
+    let day = currentDate.getDate() >= 10 ? currentDate.getDate() : `0${currentDate.getDate()}`
+    let month = currentDate.getMonth() >= 10 ? currentDate.getMonth()+1 : `0${currentDate.getMonth()+1}`
+    let year = currentDate.getFullYear()
+    let today = `${year}${month}${day}`
+
+    let hours = currentDate.getHours() >=10 ? currentDate.getHours() : `0${currentDate.getHours()}`
+    let minutes = currentDate.getMinutes() >= 10 ? currentDate.getMinutes() : `0${currentDate.getMinutes()}`
+    let seconds = currentDate.getSeconds() >= 10 ? currentDate.getSeconds() : `0${currentDate.getSeconds()}`
+    let time = `${hours}${minutes}${seconds}`
+
+    
+    // Iterate through data, parse and format
     for(let obj of objects) {
-    
-        let dateTime = obj.created_at.split('T')
-        let date = dateTime[0].replaceAll('-','')
-        let yearMonthDay = dateTime[0].split('-') 
-        let time = dateTime[1].replaceAll(':', '').replaceAll('.', '').slice(0, -1)
-        let transactionID = '221000'+yearMonthDay[1]+yearMonthDay[2]+yearMonthDay[0]+time+Math.floor(Math.random() * 10);
-    
-        let answers = []
-    
-        // if(obj.id){
-        //     let data = {question: 'Q10003', answer: 'A10003', value: obj.id}
-        //     answers.push(data)
-        // }
-        
+
+        // Get random 10 digit number
+        let randomDigits = Math.floor(Math.random() * 9000000000) + 1000000000;
+
+        // Construct transaction ID
+        let transactionID = '221000'+month+day+year+randomDigits
+
+        // Get date of data creation
+        let createdAt = obj.created_at.split('T')
+        createdAt = createdAt[0].replaceAll('-','')
+
+        // Instantiate answers array
+        let answers = []    
     
         if(obj.name){
             let name = obj.name.split(" ")
@@ -159,7 +166,7 @@ function pfizerFormat(objects, save) {
             for(let answer of answers) {
                 let pfizer = ''
                 pfizer += 'VAT|'
-                pfizer += `${date}|`
+                pfizer += `${createdAt}|`
                 pfizer += 'COMI11004325|'
                 pfizer += `${transactionID}|`
                 pfizer += 'S50009|'
@@ -173,6 +180,9 @@ function pfizerFormat(objects, save) {
        
     }
     
+    // Add header and trailer
+    let headerTrailer = `VAT|${pfizerFormat.length}|${today}|${time}|`
+    pfizerFormat.unshift(headerTrailer)
     pfizerFormat.push(headerTrailer)
     
     // Create string from data
@@ -181,7 +191,7 @@ function pfizerFormat(objects, save) {
         pfizerString += `${pfizer}\n`
     }
     
-    // Log it
+    // Print out formatted data
     console.log(pfizerString)
     
     // Save to text file
@@ -202,7 +212,7 @@ function removeAllChars(string, chars){
 }
 
 /** Get hardcoded answer code based on survey answer */
-function getAnswerCode(answer, def){
+function getAnswerCode(answer){
     
     answer = answer.toLowerCase()
 
