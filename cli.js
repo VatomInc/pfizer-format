@@ -181,7 +181,7 @@ function pfizerFormat(objects, save) {
     }
     
     // Add header and trailer
-    let headerTrailer = `VAT|${objects.length}|${pfizerFormat.length}|${today}|${time}|`
+    let headerTrailer = `VAT|${pfizerFormat.length}|${objects.length}|${today}|${time}|`
     pfizerFormat.unshift(headerTrailer)
     pfizerFormat.push(headerTrailer)
     
