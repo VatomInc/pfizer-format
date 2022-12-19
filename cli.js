@@ -98,20 +98,32 @@ function pfizerFormat(objects, save) {
         let transactionID = '221000'+month+day+year+randomDigits
 
         // Get date of data creation
-        let createdAt = obj.created_at.split('T')
-        createdAt = createdAt[0].replaceAll('-','')
+        let createdAt = obj.created_at
+        if(createdAt.includes('T')){
+            createdAt = createdAt.split('T')
+            createdAt = createdAt[0].replaceAll('-','')
+        }
+        else if(createdAt.includes('/')){
+            createdAt = createdAt.split('/')
+            createdAt = '20'+createdAt[2]+createdAt[0]+createdAt[1]
+        }
 
         // Instantiate answers array
         let answers = []    
     
         if(obj.name){
             let name = obj.name.split(" ")
+
+            if(name[0]){
+                let data = {question: 'Q10005', answer: 'A10005', value: name[0]}
+                answers.push(data)
+            }
+           
+            if(name[1]){
+                data = {question: 'Q10007', answer: 'A10007', value: name[1]}
+                answers.push(data)
+            }
             
-            let data = {question: 'Q10005', answer: 'A10005', value: name[0]}
-            answers.push(data)
-    
-            data = {question: 'Q10007', answer: 'A10007', value: name[1]}
-            answers.push(data)
         }
     
         if(obj.email){
@@ -141,8 +153,13 @@ function pfizerFormat(objects, save) {
                     answers.push({question: 'Q50115', answer: 'A50253', value: 'Yes'})
                     break
                 }
-                let data = {question: 'Q50111', answer: getAnswerCode(c), value: c}
-                answers.push(data)
+                
+                let answerCode = getAnswerCode(c)
+                if(answerCode){
+                    let data = {question: 'Q50111', answer: answerCode, value: c}
+                    answers.push(data)
+                }
+                
             }
         }
             
@@ -155,8 +172,11 @@ function pfizerFormat(objects, save) {
                     break
                 }
                 
-                let data = {question: 'Q50112', answer: getAnswerCode(c), value: c}
-                answers.push(data)
+                let answerCode = getAnswerCode(c)
+                if(answerCode){
+                    let data = {question: 'Q50111', answer: answerCode, value: c}
+                    answers.push(data)
+                }
             }
         }
 
@@ -232,11 +252,11 @@ function getAnswerCode(answer){
         return 'A50243'
     }
 
-    if(answer == '6m-4'){
+    if(answer == '6m-4' || answer == '6m-4y'){
         return 'A50244'
     }
 
-    if(answer == 'immunocompromised'){
+    if(answer == 'immunocompromised' || answer == 'imm'){
         return 'A50245'
     }
 
