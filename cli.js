@@ -28,7 +28,7 @@ if(fileType == 'csv') {
             created_at: row[2],
             email: row[3],
             name: row[4],
-            phone: row[5].slice(-10),
+            phone: formatCell(row[5]),
             jingleball_age: row[6],
             jingleball_zip: row[7],
             jingleball_content_1: removeAllChars(row[8], charsToRemove),
@@ -228,6 +228,14 @@ function removeAllChars(string, chars){
     for(let char of chars){
         string = string.replaceAll(char, '')
     }
+    return string
+}
+
+/** Converts cellphone to desired format */
+function formatCell(string){
+    const charsToRemove = ['(',')','+']
+    string = removeAllChars(string, charsToRemove)
+    string.replace(/\s/g, '')
     return string
 }
 
