@@ -28,7 +28,7 @@ if(fileType == 'csv') {
             created_at: row[2],
             email: row[3],
             name: row[4],
-            phone: formatCell(row[5]),
+            phone: formatCell(row[5]).slice(-10),
             jingleball_age: row[6],
             jingleball_zip: row[7],
             jingleball_content_1: removeAllChars(row[8], charsToRemove),
@@ -95,7 +95,7 @@ function pfizerFormat(objects, save) {
         let randomDigits = Math.floor(Math.random() * 9000000000) + 1000000000;
 
         // Construct transaction ID
-        let transactionID = '221000'+month+day+year+randomDigits
+        let transactionID = '221000'+today+randomDigits
 
         // Get date of data creation
         let createdAt = obj.created_at
@@ -174,7 +174,7 @@ function pfizerFormat(objects, save) {
                 
                 let answerCode = getAnswerCode(c)
                 if(answerCode){
-                    let data = {question: 'Q50111', answer: answerCode, value: c}
+                    let data = {question: 'Q50112', answer: answerCode, value: c}
                     answers.push(data)
                 }
             }
@@ -233,7 +233,7 @@ function removeAllChars(string, chars){
 
 /** Converts cellphone to desired format */
 function formatCell(string){
-    const charsToRemove = ['(',')','+']
+    const charsToRemove = ['(',')','+', " "]
     string = removeAllChars(string, charsToRemove)
     string.replace(/\s/g, '')
     return string
